@@ -1,7 +1,7 @@
 ---
 description: Analyze and visualize architecture of a codebase area
 argument-hint: [directory-or-area]
-allowed-tools: Glob, Grep, Read, Bash(python:*)
+allowed-tools: *
 ---
 
 # Architecture Analysis
@@ -9,6 +9,17 @@ allowed-tools: Glob, Grep, Read, Bash(python:*)
 Analyze the architecture of: **$ARGUMENTS**
 
 ## Your Task
+
+### Setup: Create Visualization Submodule
+
+Before starting the analysis, create a git submodule for storing all visualization outputs:
+
+1. Create a directory called `visualizations/` in the user's repository root
+2. Initialize it as a git submodule (if it doesn't exist already)
+3. All outputs (HTML files, images, assets) will be stored in this submodule
+4. The HTML file will be the main entry point for viewing the visualization
+
+### Workflow
 
 1. **Explore** the codebase area using Glob and Read to understand:
    - Key components and their responsibilities
@@ -20,9 +31,20 @@ Analyze the architecture of: **$ARGUMENTS**
    - How they interact
    - Key patterns or design decisions
 
-3. **Visualize** by generating diagram(s) using the gemini-imagen skill scripts
+3. **Visualize** - You have complete freedom to choose the best visualization approach:
+   - **HTML + JavaScript**: Create interactive visualizations using any JavaScript libraries (D3.js, Chart.js, Plotly, Three.js, etc.)
+   - **Generated Images**: Use gemini-imagen skill scripts to generate diagrams
+   - **Hybrid**: Combine both - generate images and embed them in an interactive HTML page
+
+   **CRITICAL - Image Handling Rule:**
+   - If you generate images (using gemini-imagen scripts), save them in the `visualizations/` submodule
+   - Reference these images in an HTML file (also in the submodule)
+   - Images should NOT be standalone - always create an HTML file that displays them
+   - The HTML file serves as the entry point for viewing all visualizations
 
 ## Critical Visualization Guidelines
+
+### For Image Generation (using gemini-imagen)
 
 **NEVER be vague in image prompts. The image model cannot see the codebase.**
 
@@ -33,7 +55,41 @@ Analyze the architecture of: **$ARGUMENTS**
 5. **State cardinality**: "1 to N (many)" on relationship lines (not "has many")
 6. **Complete flows**: List every step sequentially with explicit labels
 
-## Diagram Templates
+### For HTML/Interactive Visualizations
+
+You have complete freedom to create any type of interactive visualization. Consider:
+
+**JavaScript Libraries** (load via CDN):
+- **D3.js**: Complex data visualizations, force-directed graphs, hierarchies
+- **Chart.js**: Simple charts (bar, line, pie, radar)
+- **Plotly**: Interactive scientific/statistical charts
+- **Three.js**: 3D visualizations
+- **Mermaid.js**: Diagrams from text descriptions (flowcharts, sequence diagrams, etc.)
+- **Cytoscape.js**: Network/graph visualizations
+- **Vis.js**: Timeline, network, and graph visualizations
+- Or any other library you find appropriate
+
+**Visualization Types:**
+- Interactive architecture diagrams with clickable components
+- Animated data flow visualizations
+- Filterable/searchable dependency graphs
+- Timeline views of execution flows
+- Interactive code maps with zoom/pan
+- Combined visualizations (images + interactive overlays)
+
+**File Structure:**
+- Create `visualizations/index.html` as the main entry point
+- Can use multiple HTML files if needed
+- External CSS/JS files are allowed
+- Reference any generated images with relative paths
+
+**Best Practices:**
+- Use multiple files with external references when appropriate
+- Include clear navigation if creating multiple pages
+- Add interactivity where it enhances understanding (hover tooltips, click to expand, etc.)
+- Keep it simple - this is throwaway code, don't over-engineer
+
+## Diagram Templates (for Image Generation)
 
 Choose the appropriate template based on what you discovered:
 
@@ -97,6 +153,33 @@ Consider creative formats when appropriate:
 
 ## Output
 
-- Generate diagram using: `scripts/generate_image.py "YOUR_EXPLICIT_PROMPT" architecture-diagram.png --size 4K --aspect 16:9`. The file has a python and uv shebang on it. Execute it directly instead of using python.
+### Creating Visualizations
+
+**Option 1: HTML + Interactive JavaScript**
+- Create `visualizations/index.html` with your interactive visualization
+- Use any JavaScript libraries via CDN
+- Can create additional HTML/CSS/JS files as needed
+- Reference any generated images with relative paths
+
+**Option 2: Generated Images (via gemini-imagen)**
+- Generate diagrams using: `scripts/generate_image.py "YOUR_EXPLICIT_PROMPT" visualizations/architecture-diagram.png --size 4K --aspect 16:9`
+- The script has a python and uv shebang - execute it directly instead of using python
+- Save all images in the `visualizations/` submodule
+- Create `visualizations/index.html` that displays the images
 - If complex, create multiple focused diagrams rather than one overwhelming image
-- Save as descriptive filenames: `component-relationships.png`, `data-flow.png`, etc.
+- Use descriptive filenames: `component-relationships.png`, `data-flow.png`, etc.
+
+**Option 3: Hybrid Approach**
+- Generate images using gemini-imagen scripts (save to `visualizations/`)
+- Create interactive HTML that embeds/references the images
+- Add JavaScript interactivity on top (zoom, annotations, navigation, etc.)
+
+### Viewing the Visualization
+
+After creating the visualization, start a local server:
+
+```bash
+python -m http.server --directory visualizations/
+```
+
+Then open `http://localhost:8000` in a browser to view the visualization.
