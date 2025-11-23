@@ -1,0 +1,26 @@
+{
+  "name": "agneym-marketplace",
+  "owner": {
+    "name": "Agney",
+    "url": "https://github.com/agneym/agneym-claude-marketplace"
+  },
+  "metadata": {
+    "description": "Claude Code plugin marketplace for Agney's plugins",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "gemini-imagen",
+      "description": "Claude Code plugin for generating and editing images using Google's Gemini API for understanding codebases",
+      "version": "1.0.0",
+      "author": {
+        "name": "Agney",
+        "url": "https://github.com/agneym",
+        "email": "agney@outlook.in"
+      },
+      "homepage": "https://github.com/agneym/agneym-claude-marketplace/plugins/gemini-imagen",
+      "tags": ["image-generation", "gemini", "ai", "technical-diagrams", "architecture", "visualization", "illustration"],
+      "source": "./plugins/gemini-imagen"
+    }
+  ]
+}
