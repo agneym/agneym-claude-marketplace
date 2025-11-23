@@ -97,6 +97,6 @@ Consider creative formats when appropriate:
 
 ## Output
 
-- Generate diagram using: `scripts/generate_image.py "YOUR_EXPLICIT_PROMPT" architecture-diagram.png --size 4K --aspect 16:9`
+- Generate diagram using: `scripts/generate_image.py "YOUR_EXPLICIT_PROMPT" architecture-diagram.png --size 4K --aspect 16:9`. The file has a python and uv shebang on it. Execute it directly instead of using python.
 - If complex, create multiple focused diagrams rather than one overwhelming image
 - Save as descriptive filenames: `component-relationships.png`, `data-flow.png`, etc.
