@@ -16,9 +16,7 @@ Extracted from https://github.com/EveryInc/every-marketplace/tree/d44804fc39d60b
 ## Installation
 
 
-```bash
-npx claude-plugins install @agneym/agney-cm/explore-with-illustrations
-```
+Refer to [Marketplace README](../explore-with-illustrations/README.md#installation)
 
 ## Requirements
 

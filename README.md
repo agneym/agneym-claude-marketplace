@@ -19,12 +19,3 @@ Then install the plugin:
 ```bash
 /plugin install explore-with-illustrations
 ```
-
-### One-Command Installation
-Use the [Claude Plugins CLI](https://claude-plugins.dev) to skip the marketplace setup:
-
-```bash
-npx claude-plugins install @agneym/agneym-claude-marketplace/explore-with-illustrations
-```
-
-This automatically adds the marketplace and installs the plugin in a single step.
